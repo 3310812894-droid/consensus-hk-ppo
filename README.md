@@ -92,7 +92,7 @@ python -m consensus_hk.evaluate --section ablation --output outputs/ablation
 - `no_gravity_penalty`仅将重心偏移惩罚权重设为0，仍以`V <= 0.05`且`G <= 0.45`判定成功。
 
 这两项变体均从头训练。完整模型在消融评估中复用`main`，不再训练。
-本仓库不提供正文未展示的其他消融入口。
+
 
 ## 序数反转惩罚权重敏感性分析
 
@@ -141,7 +141,6 @@ python -m consensus_hk.evaluate --section baselines --natural-only --output outp
 
 基线仅包含经典HK、SCOD、逐边自适应信任HK、噪声HK和惯性HK。
 参数与多维适配说明见`configs/paper_protocol.json`和`consensus_hk/baselines.py`。
-不将原参考文献的理论保证直接移用于本项目的多维适配。
 
 ## 随机生成器与统计口径
 
