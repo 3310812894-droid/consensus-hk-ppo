@@ -1,0 +1,620 @@
+{
+  "schema_version": 1,
+  "scope": "Archived paper experiments, sections 3.2--3.8",
+  "data_status": "Archived data export; exact equality of future independently retrained policies is not guaranteed.",
+  "source_root_label": "revision_code",
+  "configuration_aliases": {
+    "lambda_rev_1": "main",
+    "N_100_M_5": "main"
+  },
+  "environment": {
+    "opinion_domain": [
+      0.0,
+      1.0
+    ],
+    "initial_distribution": "iid Uniform(0,1)",
+    "training_epsilon_range": [
+      0.05,
+      0.3
+    ],
+    "max_HK_rounds": 200,
+    "micro_scale": 0.05,
+    "mask_low": 0.05,
+    "mask_high": 0.95,
+    "variance_threshold": 0.05,
+    "gravity_threshold": 0.45,
+    "observation_dimension": "2*N*M + N*N + 3",
+    "action_dimension": "M",
+    "opinion_dtype": "float64",
+    "observation_dtype": "float32",
+    "confidence_distance": "mean(abs(U_i-U_j)); neighborhood distance <= epsilon",
+    "transition": "One cyclic expert intervention per RL step; one synchronous HK update after each complete N-expert sweep.",
+    "termination": "V <= 0.05 and G <= 0.45 after each state transition; otherwise truncate after 200 completed HK sweeps.",
+    "training_rng": "Gymnasium-seeded numpy Generator; draw U0 first, then episode epsilon; epsilon is fixed within an episode."
+  },
+  "training": {
+    "n_envs": 1,
+    "policy": "MlpPolicy",
+    "actor_hidden_layers": [
+      64,
+      64
+    ],
+    "critic_hidden_layers": [
+      64,
+      64
+    ],
+    "activation": "Tanh",
+    "learning_rate_schedule": "3e-4 * progress_remaining",
+    "normalise_advantage": true,
+    "actual_timesteps_note": "10,000,384 archived steps for the 10,000,000 budget due to 2048-step rollout completion."
+  },
+  "configurations": {
+    "main": {
+      "N": 100,
+      "M": 5,
+      "training_seed": 42,
+      "requested_timesteps": 10000000,
+      "ppo": {
+        "learning_rate": 0.0003,
+        "n_steps": 2048,
+        "batch_size": 1024,
+        "n_epochs": 10,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "clip_range": 0.2,
+        "ent_coef": 0.01,
+        "vf_coef": 0.5,
+        "max_grad_norm": 0.5
+      },
+      "reward": {
+        "variance_weight": 200.0,
+        "gravity_weight": 0.05,
+        "ordinal_weight": 1.0,
+        "edge_weight": 0.0,
+        "adjustment_weight": 0.0,
+        "time_friction": 0.02,
+        "terminal_bonus": 20.0,
+        "gravity_threshold": 0.45
+      },
+      "mask_enabled": true,
+      "terminal_gravity_constraint": true,
+      "result_model_label": "full_model",
+      "default_retrained_checkpoint": "runs/main/final_model.zip",
+      "archived_actual_timesteps": 10000384
+    },
+    "no_mask": {
+      "N": 100,
+      "M": 5,
+      "training_seed": 42,
+      "requested_timesteps": 10000000,
+      "ppo": {
+        "learning_rate": 0.0003,
+        "n_steps": 2048,
+        "batch_size": 1024,
+        "n_epochs": 10,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "clip_range": 0.2,
+        "ent_coef": 0.01,
+        "vf_coef": 0.5,
+        "max_grad_norm": 0.5
+      },
+      "reward": {
+        "variance_weight": 200.0,
+        "gravity_weight": 0.05,
+        "ordinal_weight": 1.0,
+        "edge_weight": 0.0,
+        "adjustment_weight": 0.0,
+        "time_friction": 0.02,
+        "terminal_bonus": 20.0,
+        "gravity_threshold": 0.45
+      },
+      "mask_enabled": false,
+      "terminal_gravity_constraint": true,
+      "result_model_label": "no_mask",
+      "default_retrained_checkpoint": "runs/no_mask/final_model.zip",
+      "archived_actual_timesteps": 10000384
+    },
+    "no_gravity_penalty": {
+      "N": 100,
+      "M": 5,
+      "training_seed": 42,
+      "requested_timesteps": 10000000,
+      "ppo": {
+        "learning_rate": 0.0003,
+        "n_steps": 2048,
+        "batch_size": 1024,
+        "n_epochs": 10,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "clip_range": 0.2,
+        "ent_coef": 0.01,
+        "vf_coef": 0.5,
+        "max_grad_norm": 0.5
+      },
+      "reward": {
+        "variance_weight": 200.0,
+        "gravity_weight": 0.0,
+        "ordinal_weight": 1.0,
+        "edge_weight": 0.0,
+        "adjustment_weight": 0.0,
+        "time_friction": 0.02,
+        "terminal_bonus": 20.0,
+        "gravity_threshold": 0.45
+      },
+      "mask_enabled": true,
+      "terminal_gravity_constraint": true,
+      "result_model_label": "no_gravity_penalty",
+      "default_retrained_checkpoint": "runs/no_gravity_penalty/final_model.zip",
+      "archived_actual_timesteps": 10000384
+    },
+    "lambda_rev_0p5": {
+      "N": 100,
+      "M": 5,
+      "training_seed": 42,
+      "requested_timesteps": 10000000,
+      "ppo": {
+        "learning_rate": 0.0003,
+        "n_steps": 2048,
+        "batch_size": 1024,
+        "n_epochs": 10,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "clip_range": 0.2,
+        "ent_coef": 0.01,
+        "vf_coef": 0.5,
+        "max_grad_norm": 0.5
+      },
+      "reward": {
+        "variance_weight": 200.0,
+        "gravity_weight": 0.05,
+        "ordinal_weight": 0.5,
+        "edge_weight": 0.0,
+        "adjustment_weight": 0.0,
+        "time_friction": 0.02,
+        "terminal_bonus": 20.0,
+        "gravity_threshold": 0.45
+      },
+      "mask_enabled": true,
+      "terminal_gravity_constraint": true,
+      "result_model_label": "lambda_rev_0p5",
+      "default_retrained_checkpoint": "runs/lambda_rev_0p5/final_model.zip",
+      "archived_actual_timesteps": 10000384
+    },
+    "lambda_rev_1p5": {
+      "N": 100,
+      "M": 5,
+      "training_seed": 42,
+      "requested_timesteps": 10000000,
+      "ppo": {
+        "learning_rate": 0.0003,
+        "n_steps": 2048,
+        "batch_size": 1024,
+        "n_epochs": 10,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "clip_range": 0.2,
+        "ent_coef": 0.01,
+        "vf_coef": 0.5,
+        "max_grad_norm": 0.5
+      },
+      "reward": {
+        "variance_weight": 200.0,
+        "gravity_weight": 0.05,
+        "ordinal_weight": 1.5,
+        "edge_weight": 0.0,
+        "adjustment_weight": 0.0,
+        "time_friction": 0.02,
+        "terminal_bonus": 20.0,
+        "gravity_threshold": 0.45
+      },
+      "mask_enabled": true,
+      "terminal_gravity_constraint": true,
+      "result_model_label": "lambda_rev_1p5",
+      "default_retrained_checkpoint": "runs/lambda_rev_1p5/final_model.zip",
+      "archived_actual_timesteps": 10000384
+    },
+    "lambda_rev_2": {
+      "N": 100,
+      "M": 5,
+      "training_seed": 42,
+      "requested_timesteps": 10000000,
+      "ppo": {
+        "learning_rate": 0.0003,
+        "n_steps": 2048,
+        "batch_size": 1024,
+        "n_epochs": 10,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "clip_range": 0.2,
+        "ent_coef": 0.01,
+        "vf_coef": 0.5,
+        "max_grad_norm": 0.5
+      },
+      "reward": {
+        "variance_weight": 200.0,
+        "gravity_weight": 0.05,
+        "ordinal_weight": 2.0,
+        "edge_weight": 0.0,
+        "adjustment_weight": 0.0,
+        "time_friction": 0.02,
+        "terminal_bonus": 20.0,
+        "gravity_threshold": 0.45
+      },
+      "mask_enabled": true,
+      "terminal_gravity_constraint": true,
+      "result_model_label": "lambda_rev_2",
+      "default_retrained_checkpoint": "runs/lambda_rev_2/final_model.zip",
+      "archived_actual_timesteps": 10000384
+    },
+    "N_50_M_5": {
+      "N": 50,
+      "M": 5,
+      "training_seed": 42,
+      "requested_timesteps": 10000000,
+      "ppo": {
+        "learning_rate": 0.0003,
+        "n_steps": 2048,
+        "batch_size": 1024,
+        "n_epochs": 10,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "clip_range": 0.2,
+        "ent_coef": 0.01,
+        "vf_coef": 0.5,
+        "max_grad_norm": 0.5
+      },
+      "reward": {
+        "variance_weight": 200.0,
+        "gravity_weight": 0.05,
+        "ordinal_weight": 1.0,
+        "edge_weight": 0.0,
+        "adjustment_weight": 0.0,
+        "time_friction": 0.02,
+        "terminal_bonus": 20.0,
+        "gravity_threshold": 0.45
+      },
+      "mask_enabled": true,
+      "terminal_gravity_constraint": true,
+      "result_model_label": "N_50_M_5",
+      "default_retrained_checkpoint": "runs/N_50_M_5/final_model.zip",
+      "archived_actual_timesteps": 10000384
+    },
+    "N_200_M_5": {
+      "N": 200,
+      "M": 5,
+      "training_seed": 42,
+      "requested_timesteps": 10000000,
+      "ppo": {
+        "learning_rate": 0.0003,
+        "n_steps": 2048,
+        "batch_size": 1024,
+        "n_epochs": 10,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "clip_range": 0.2,
+        "ent_coef": 0.01,
+        "vf_coef": 0.5,
+        "max_grad_norm": 0.5
+      },
+      "reward": {
+        "variance_weight": 200.0,
+        "gravity_weight": 0.05,
+        "ordinal_weight": 1.0,
+        "edge_weight": 0.0,
+        "adjustment_weight": 0.0,
+        "time_friction": 0.02,
+        "terminal_bonus": 20.0,
+        "gravity_threshold": 0.45
+      },
+      "mask_enabled": true,
+      "terminal_gravity_constraint": true,
+      "result_model_label": "N_200_M_5",
+      "default_retrained_checkpoint": "runs/N_200_M_5/final_model.zip",
+      "archived_actual_timesteps": 10000384
+    },
+    "N_100_M_3": {
+      "N": 100,
+      "M": 3,
+      "training_seed": 42,
+      "requested_timesteps": 10000000,
+      "ppo": {
+        "learning_rate": 0.0003,
+        "n_steps": 2048,
+        "batch_size": 1024,
+        "n_epochs": 10,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "clip_range": 0.2,
+        "ent_coef": 0.01,
+        "vf_coef": 0.5,
+        "max_grad_norm": 0.5
+      },
+      "reward": {
+        "variance_weight": 200.0,
+        "gravity_weight": 0.05,
+        "ordinal_weight": 1.0,
+        "edge_weight": 0.0,
+        "adjustment_weight": 0.0,
+        "time_friction": 0.02,
+        "terminal_bonus": 20.0,
+        "gravity_threshold": 0.45
+      },
+      "mask_enabled": true,
+      "terminal_gravity_constraint": true,
+      "result_model_label": "N_100_M_3",
+      "default_retrained_checkpoint": "runs/N_100_M_3/final_model.zip",
+      "archived_actual_timesteps": 10000384
+    },
+    "N_100_M_10": {
+      "N": 100,
+      "M": 10,
+      "training_seed": 42,
+      "requested_timesteps": 10000000,
+      "ppo": {
+        "learning_rate": 0.0003,
+        "n_steps": 2048,
+        "batch_size": 1024,
+        "n_epochs": 10,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "clip_range": 0.2,
+        "ent_coef": 0.01,
+        "vf_coef": 0.5,
+        "max_grad_norm": 0.5
+      },
+      "reward": {
+        "variance_weight": 200.0,
+        "gravity_weight": 0.05,
+        "ordinal_weight": 1.0,
+        "edge_weight": 0.0,
+        "adjustment_weight": 0.0,
+        "time_friction": 0.02,
+        "terminal_bonus": 20.0,
+        "gravity_threshold": 0.45
+      },
+      "mask_enabled": true,
+      "terminal_gravity_constraint": true,
+      "result_model_label": "N_100_M_10",
+      "default_retrained_checkpoint": "runs/N_100_M_10/final_model.zip",
+      "archived_actual_timesteps": 10000384
+    }
+  },
+  "metrics": {
+    "final_variance": "Sum of population variances over alternatives (ddof=0).",
+    "gravity_shift": "L2 norm(mean(U_terminal)-mean(U_initial)) / sqrt(M).",
+    "final_oprr": "Percentage of initially strict alternative pairs whose terminal order is strictly opposite; terminal ties are not reversals.",
+    "joint_success": "final_variance <= 0.05 and gravity_shift <= 0.45",
+    "intervention_steps": "Individual interventions, including all steps in failed episodes. Natural HK baselines have 0.",
+    "equivalent_rounds": "Intervention steps/N for PPO; actual synchronous update count for natural HK baselines.",
+    "reported_standard_deviation": "Sample standard deviation, ddof=1, for independent evaluation episodes.",
+    "successful_steps_statistics": "Compute only over joint-success episodes; terminal metrics use all requested episodes."
+  },
+  "evaluation": {
+    "deterministic_policy": true,
+    "typical_case_rng": "numpy.random.RandomState(42).uniform(0,1,(100,5))",
+    "other_uniform_rng": "numpy.random.default_rng(seed).uniform(0,1,(N,M))",
+    "paired_seeds": [
+      10000,
+      10001,
+      10002,
+      10003,
+      10004,
+      10005,
+      10006,
+      10007,
+      10008,
+      10009,
+      10010,
+      10011,
+      10012,
+      10013,
+      10014,
+      10015,
+      10016,
+      10017,
+      10018,
+      10019
+    ],
+    "ID_thresholds": [
+      0.05,
+      0.1,
+      0.15,
+      0.2,
+      0.25,
+      0.3
+    ],
+    "three_typical_thresholds": [
+      0.05,
+      0.15,
+      0.25
+    ],
+    "parameter_OOD_thresholds": [
+      0.03,
+      0.35
+    ],
+    "ID_initial_state_seeds": [
+      10000,
+      10001,
+      10002,
+      10003,
+      10004,
+      10005,
+      10006,
+      10007,
+      10008,
+      10009,
+      10010,
+      10011,
+      10012,
+      10013,
+      10014,
+      10015,
+      10016,
+      10017,
+      10018,
+      10019,
+      10020,
+      10021,
+      10022,
+      10023,
+      10024,
+      10025,
+      10026,
+      10027,
+      10028,
+      10029,
+      10030,
+      10031,
+      10032,
+      10033,
+      10034,
+      10035,
+      10036,
+      10037,
+      10038,
+      10039,
+      10040,
+      10041,
+      10042,
+      10043,
+      10044,
+      10045,
+      10046,
+      10047,
+      10048,
+      10049,
+      10050,
+      10051,
+      10052,
+      10053,
+      10054,
+      10055,
+      10056,
+      10057,
+      10058,
+      10059,
+      10060,
+      10061,
+      10062,
+      10063,
+      10064,
+      10065,
+      10066,
+      10067,
+      10068,
+      10069,
+      10070,
+      10071,
+      10072,
+      10073,
+      10074,
+      10075,
+      10076,
+      10077,
+      10078,
+      10079,
+      10080,
+      10081,
+      10082,
+      10083,
+      10084,
+      10085,
+      10086,
+      10087,
+      10088,
+      10089,
+      10090,
+      10091,
+      10092,
+      10093,
+      10094,
+      10095,
+      10096,
+      10097,
+      10098,
+      10099
+    ],
+    "ID_initial_state_threshold": 0.05,
+    "scale_evaluation_seed": 42,
+    "scale_training_scope": "Shape-specific independent training; N=100,M=5 reuses main in the published configuration interface.",
+    "initial_state_pairing": "The same initial distribution and seed supply identical U0 across evaluated thresholds.",
+    "distribution_definitions": {
+      "uniform": "iid Uniform(0,1)",
+      "beta_center": "iid Beta(2,2)",
+      "beta_extremes": "iid Beta(0.5,0.5)",
+      "beta_high": "iid Beta(5,2)",
+      "bimodal": "First 50 experts iid Beta(2,8), next 50 iid Beta(8,2), then permute expert rows with the same default_rng(seed)."
+    }
+  },
+  "baselines": {
+    "paper_methods": [
+      "hk",
+      "scod",
+      "adaptive_confidence",
+      "noise_hk",
+      "inertial",
+      "full_model"
+    ],
+    "SCOD": "Any coordinate distance <= epsilon creates confidence; average full vectors.",
+    "adaptive_confidence": {
+      "initial_pair_threshold": "epsilon",
+      "receptive_test": "distance < current pair threshold",
+      "reinforce": 0.1,
+      "decay": 0.9,
+      "updates": "Use old opinions and old thresholds synchronously; always include self."
+    },
+    "noise_hk": {
+      "amplitude": "epsilon/4",
+      "distribution": "Independent Uniform(-epsilon/4,epsilon/4) per opinion component after each HK update, then clip [0,1].",
+      "dynamics_rng": "numpy.random.default_rng(numpy.random.SeedSequence([seed, 0x4E484B]))"
+    },
+    "inertial": {
+      "self_retention": 0.5,
+      "neighborhood_mean_weight": 0.5
+    },
+    "interpretation": "Multidimensional adaptations and selected model instances; no transfer of all original-paper theoretical guarantees."
+  },
+  "source_metadata": [
+    {
+      "source": "results/gravity_terminal_scalability/N_100_M_5/training_config.json",
+      "sha256": "2ea87572643f143d2e0f47b1e9b6bf506c68be54810aab21583b497842851ecb"
+    },
+    {
+      "source": "results/ablation_v4/paper_ablation_v4_10M_01/no_mask/training_config.json",
+      "sha256": "07ad9f7c53616fa613bdc2f2e56c1bccb81e7b8565a5afe93ad12d64a35dce9d"
+    },
+    {
+      "source": "results/ablation_v4/paper_ablation_v4_10M_01/no_gravity_penalty/training_config.json",
+      "sha256": "26cde1b1baefc4d85bbfdaaab8c92c1e5233bcf34ac5bcf12610e8786054a16b"
+    },
+    {
+      "source": "results/ordinal_weight_sensitivity/ordinal_sensitivity_10M_01/lambda_rev_0p5/training_config.json",
+      "sha256": "d98b151a2530043efec5f44ab08bf7a0c79bb5eaf48e106b6f2310d806f94a43"
+    },
+    {
+      "source": "results/ordinal_weight_sensitivity/ordinal_sensitivity_10M_01/lambda_rev_1p5/training_config.json",
+      "sha256": "7b7657d507d0ed1ce7b607221e9506a09070d281c5efa6fe403c3df047d0c85d"
+    },
+    {
+      "source": "results/ordinal_weight_sensitivity/ordinal_sensitivity_10M_01/lambda_rev_2/training_config.json",
+      "sha256": "89cfd7d7881fa65683a2b681279078d6f651d0ac4ccdcd7e3402a4e1cfc0bbc2"
+    },
+    {
+      "source": "results/gravity_terminal_scalability/N_50_M_5/training_config.json",
+      "sha256": "ac131d7a6f950d025bacfb2abd9f28267ec49121e8e12c6e4d740a9fb50f4019"
+    },
+    {
+      "source": "results/gravity_terminal_scalability/N_200_M_5/training_config.json",
+      "sha256": "7fa6e6ef64f7d67a465807008e25629fce7cf8a53a8c1588fe93718251281c3c"
+    },
+    {
+      "source": "results/gravity_terminal_scalability/N_100_M_3/training_config.json",
+      "sha256": "0cdcc1e7a901d5b582b6d103d9fcc63c89488be4ee93c428eaa4b81b6d2c6891"
+    },
+    {
+      "source": "results/gravity_terminal_scalability/N_100_M_10/training_config.json",
+      "sha256": "a3e9eb1b616a1b8eb8a672bbaa676edc40b498603992f47f083d3b6fbd0887ca"
+    }
+  ]
+}

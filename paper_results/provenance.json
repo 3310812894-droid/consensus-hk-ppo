@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "source_root_label": "revision_code",
+  "data_status": "Archived data; exported without training or inference. Exact independently retrained outputs are not guaranteed.",
+  "numeric_policy": "Preserve archived decimal strings and full floating-point precision; no rounding, smoothing or interpolation of exported data.",
+  "files": [
+    {
+      "file": "section_32_monitor.csv",
+      "rows": 14679,
+      "source": "results/gravity_terminal_scalability/N_100_M_5/monitor/0.monitor.csv",
+      "source_sha256": "2286c75c464b44b53b34857089058617e81c5b3f1e93605ba9c0bfd71fa8b099",
+      "output_sha256": "2286c75c464b44b53b34857089058617e81c5b3f1e93605ba9c0bfd71fa8b099",
+      "transformation": "Byte-for-byte copy of completed main training episodes; no filtering or smoothing."
+    },
+    {
+      "file": "section_33_variance_trajectories.csv",
+      "rows": 2877,
+      "source": "results/figure_331_variance_comparison/variance_trajectories.csv",
+      "source_sha256": "c13cc9d7fd28173dd4c705db1108edbc6f2b24758a45f08acc1f51f667fb734f",
+      "output_sha256": "c13cc9d7fd28173dd4c705db1108edbc6f2b24758a45f08acc1f51f667fb734f",
+      "transformation": "Byte-for-byte copy of the archived table; original fields and numeric precision retained."
+    },
+    {
+      "file": "section_33_performance_raw.csv",
+      "rows": 6,
+      "source": "results/figure_331_variance_comparison/performance_comparison.csv",
+      "source_sha256": "be6d20af7fbf1760c2f73d73f8d9af2c1a4d72388f3b8670cfedc68008f8c91e",
+      "output_sha256": "be6d20af7fbf1760c2f73d73f8d9af2c1a4d72388f3b8670cfedc68008f8c91e",
+      "transformation": "Byte-for-byte copy of the archived table; original fields and numeric precision retained."
+    },
+    {
+      "file": "section_342_experts.csv",
+      "rows": 100,
+      "source": "results/section_342_expert_seed42_eps005/expert_level_preference_comparison_seed42_eps005.csv",
+      "source_sha256": "f5b3e5c477c76b9f1edbc67b9fd4fe495ac435d55b1490d752b706886d6147e4",
+      "output_sha256": "f5b3e5c477c76b9f1edbc67b9fd4fe495ac435d55b1490d752b706886d6147e4",
+      "transformation": "Byte-for-byte copy of the archived table; original fields and numeric precision retained."
+    },
+    {
+      "file": "section_332_opinion_trajectories.csv",
+      "rows": 21500,
+      "source": "results/figure_332_all_alternatives/trajectory_data.npz",
+      "source_sha256": "0df2642e1b2338c2c027b9b35a0f740c81ad7b39e9ee990ec1858009840beb17",
+      "output_sha256": "4a1f2ca12c2acf09c9b1b989d26c47237cee43c7330a6371375b88efc66b68ad",
+      "transformation": "Flatten existing HK (201 states) and PPO (14 saved states) histories; expert indexes are one-based. PPO time is saved equivalent rounds; no interpolation or post-terminal continuation."
+    },
+    {
+      "file": "section_333_baselines.csv",
+      "rows": 360,
+      "source": "results/hk_literature_baselines/paired20_20261004_162610_046279/summary_20261004_162749_968088/episode_results.csv",
+      "source_sha256": "fdd80a4058653730599d38651c6c94999f0c2b25a159d2ab9f2cf6a7bdff0885",
+      "output_sha256": "2df2db1da0b59bec0b648bdff510ffab9e0a9db3779d2556e927c360876f715d",
+      "transformation": "Retain five paper HK methods and the archived full-model reference, three thresholds and 20 paired seeds. Natural methods have zero intervention steps and their actual synchronous rounds.",
+      "source_rows": 480
+    },
+    {
+      "file": "section_35_ablation.csv",
+      "rows": 60,
+      "source": "results/ablation_v4/paper_ablation_v4_10M_01/summary_20261003_144705_690555/all_evaluation_results.csv",
+      "source_sha256": "f4c71a2368906a8d087f617a43470ee4a893c1628a978b714bc071ccf63893a7",
+      "output_sha256": "2b80c816a89fa23ba64e4abe24f227838c0bf8a5c6e63c20abb2ad3880745120",
+      "transformation": "Retain full model, no_mask, and reward-only no_gravity_penalty; all retain V<=0.05 and G<=0.45 termination. Do not remove failed episodes.",
+      "source_rows": 80
+    },
+    {
+      "file": "section_36_sensitivity.csv",
+      "rows": 240,
+      "source": "results/ordinal_weight_sensitivity/ordinal_sensitivity_10M_01/summary_20261003_144805_081357/all_evaluation_results.csv",
+      "source_sha256": "65a84fcfb58fe6eeea87696796a8191c037dc61fd2677dc98c7109893027bea3",
+      "output_sha256": "adbfff2b6a07f8c3975fe798dba919c527f8818e386bfda7addf6a34e749b33a",
+      "transformation": "Retain lambda_rev 0.5, 1, 1.5, 2; three thresholds; 20 paired evaluation seeds. Weight 1 reuses main.",
+      "source_rows": 240
+    },
+    {
+      "file": "section_37_scalability.csv",
+      "rows": 30,
+      "source": "results/figure_37_scalability_seed42_final_AB/section_37_scalability_plot_data.csv",
+      "source_sha256": "aadada25df7f98a17175ff288618e208e07b1d2f7a4528cb4269543f9cc4c7d6",
+      "output_sha256": "728ddaccbd41ee96cee24ba86c62e950db2183be86b10dc7894b5520211af3bd",
+      "transformation": "Retain the five archived scale configurations, six thresholds and evaluation seed 42. Source step counts and equivalent rounds are unchanged.",
+      "source_rows": 30
+    },
+    {
+      "file": "section_381_id_states.csv",
+      "rows": 100,
+      "source": "results/section_381_main_seed_evaluation/seeds_10020_10099_20261002/evaluation_results_10000_10099.csv",
+      "source_sha256": "1f1b625c3bdd0c6d172145eb9c23a3a5a15338278a246947500c38cf73d6bba6",
+      "output_sha256": "e0ec826d20f1f180843bf11ca3fe148563d079e202aa669a712beb4435c0e267",
+      "transformation": "Select exactly epsilon=0.05 and evaluation seeds 10000--10099 from the 600-row six-threshold archive.",
+      "source_rows": 600
+    },
+    {
+      "file": "section_382_ood_epsilon.csv",
+      "rows": 40,
+      "source": "results/gravity_terminal_scalability/N_100_M_5/evaluation_results.csv",
+      "source_sha256": "981b66c761b8f3b3fcd8c730f704fa8db7e402e4a6568d423f180740614e0bc7",
+      "output_sha256": "10d44b1c9b3a1a984fe6eb4c0a081f55d0013c11d890161972efb9bd283c39b2",
+      "transformation": "Select epsilon=0.03 and 0.35, each with 20 paired seeds; initial distribution remains Uniform(0,1).",
+      "source_rows": 160
+    },
+    {
+      "file": "section_383_ood_distributions.csv",
+      "rows": 480,
+      "source": "results/ood_initial_distribution/N_100_M_5/episode_results.csv",
+      "source_sha256": "e2feeddd354d9237d5b3c7e596f8c29f4103e51ee75a2d4c6a9562c3ec15d29b",
+      "output_sha256": "7b53e5500926cd9f5360764cdd72272d082e70a240297f112da313416a79704c",
+      "transformation": "Retain beta_center, beta_extremes, beta_high, bimodal; six thresholds and 20 paired seeds. Other generated distributions are excluded.",
+      "source_rows": 720
+    }
+  ]
+}
